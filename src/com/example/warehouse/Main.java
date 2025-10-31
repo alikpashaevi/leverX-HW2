@@ -5,6 +5,7 @@ import com.example.warehouse.model.Product;
 import com.example.warehouse.service.Customer;
 import com.example.warehouse.service.Warehouse;
 import com.example.warehouse.service.WarehouseWorker;
+import com.example.warehouse.util.Analytics;
 
 import java.util.Arrays;
 import java.util.List;
@@ -20,11 +21,15 @@ public class Main {
 
         Product product = new Product("Apple", 1.99);
         Product product2 = new Product("Banana", 2.99);
+        Product product3 = new Product("Orange", 3.99);
+        Product product4 = new Product("Pear", 4.99);
 
         warehouse.addProduct(product, 10);
-        warehouse.addProduct(product2, 5);
+        warehouse.addProduct(product2, 8);
+        warehouse.addProduct(product3, 6);
+        warehouse.addProduct(product4, 12);
 
-        List<Product> products = Arrays.asList(product, product2);
+        List<Product> products = Arrays.asList(product, product2, product3, product4);
 
         ExecutorService executorService = Executors.newFixedThreadPool(2);
         executorService.submit(new WarehouseWorker(warehouse, queue));
@@ -41,6 +46,8 @@ public class Main {
         executorService2.shutdownNow();
 
         warehouse.displayInventory();
+
+        Analytics.calculateAnalytics(warehouse.getProcessedOrders());
 
     }
 }

@@ -24,8 +24,6 @@ public class Customer implements Runnable{
                 Order order = new Order(name, product,quantity);
                 queue.put(order);
             }
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        } catch (InterruptedException e) {}
     }
 }

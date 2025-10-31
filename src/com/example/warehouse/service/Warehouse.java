@@ -1,5 +1,6 @@
 package com.example.warehouse.service;
 
+import com.example.warehouse.model.Order;
 import com.example.warehouse.model.Product;
 import lombok.RequiredArgsConstructor;
 
@@ -13,18 +14,21 @@ public class Warehouse {
         stock.put(product, quantity);
     }
 
-    public boolean processOrder(Product product, int quantity) {
-        return stock.computeIfPresent(product, (p, q) -> {
-            if (q >= quantity) {
-                System.out.println(Thread.currentThread().getName() +
-                        " processed " + quantity + " × " + product.getName());
-                return q - quantity;
-            } else {
-                System.out.println(Thread.currentThread().getName() +
-                        " not enough stock for " + product.getName());
+    public boolean processOrder(Order order) {
+        Product product = order.getProduct();
+        int quantity = order.getQuantity();
+
+        if (stock.get(product) >= quantity) {
+            Integer result = stock.computeIfPresent(product, (p, q) -> {
+                if (q >= quantity) {
+                    return q - quantity;
+                }
                 return q;
-            }
-        }) != null;
+            });
+
+            return result != null && stock.get(product) + quantity >= quantity;
+        }
+        return false;
     }
 
     public void displayInventory() {

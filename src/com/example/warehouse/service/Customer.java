@@ -16,10 +16,14 @@ public class Customer implements Runnable{
     @Override
     public void run() {
         try {
-            Product product = products.getFirst();
-            int quantity = 1;
-            Order order = new Order(name, product,quantity);
-            queue.put(order);
+            System.out.println("products " + products);
+            for (Product product : products) {
+                System.out.println("product " + product);
+                // randomly choose quantity
+                int quantity = 1 + (int)(Math.random() * 3);
+                Order order = new Order(name, product,quantity);
+                queue.put(order);
+            }
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }

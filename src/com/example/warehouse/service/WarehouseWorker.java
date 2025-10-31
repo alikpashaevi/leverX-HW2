@@ -16,14 +16,13 @@ public class WarehouseWorker implements Runnable {
         try {
             while (true) {
                 Order order = queue.take();
-                Product product = order.getProduct();
-                warehouse.processOrder(product, order.getQuantity());
-                if (warehouse.processOrder(product, order.getQuantity())) {
+                boolean orderProcessing = warehouse.processOrder(order);
+                if (orderProcessing) {
                     System.out.println("Order processed for " + order.getCustomerName() +
-                            ": " + order.getQuantity() + " × " + product.getName());
+                            ": " + order.getQuantity() + " × " + order.getProduct().getName());
                 } else {
                     System.out.println("Order could not be processed for " + order.getCustomerName() +
-                            ": " + order.getQuantity() + " × " + product.getName());
+                            ": " + order.getQuantity() + " × " + order.getProduct().getName());
                 }
             }
         } catch (InterruptedException e) {

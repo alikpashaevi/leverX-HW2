@@ -42,16 +42,5 @@ public class Main {
 
         warehouse.displayInventory();
 
-
-//        executorService.submit(customer);
-//        executorService.submit(worker);
-//        executorService.shutdown();
-
-//        Thread thread = new Thread(worker);
-//        Thread thread2 = new Thread(customer);
-//        thread2.start();
-//        thread.start();
-//        System.out.println("print 3 " + queue);
-
     }
 }

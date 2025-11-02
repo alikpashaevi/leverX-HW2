@@ -25,9 +25,9 @@ public class Main {
         Product product4 = new Product("Pear", 4.99);
 
         warehouse.addProduct(product, 10);
-        warehouse.addProduct(product2, 8);
+        warehouse.addProduct(product2, 6);
         warehouse.addProduct(product3, 6);
-        warehouse.addProduct(product4, 12);
+        warehouse.addProduct(product4, 5);
 
         List<Product> products = Arrays.asList(product, product2, product3, product4);
 

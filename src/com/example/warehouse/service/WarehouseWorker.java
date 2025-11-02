@@ -25,7 +25,9 @@ public class WarehouseWorker implements Runnable {
                             ": " + order.getQuantity() + " × " + order.getProduct().getName());
                 }
             }
-        } catch (InterruptedException e) {}
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
     }
 
 }

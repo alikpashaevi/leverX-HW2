@@ -3,17 +3,14 @@ package com.example.warehouse.service;
 import com.example.warehouse.model.Order;
 import com.example.warehouse.model.Product;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ExecutorService;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 @Getter
 public class Warehouse {
     private final ConcurrentHashMap<Product, Integer> stock = new ConcurrentHashMap<>();
-    private final List<Order> processedOrders = new ArrayList<>();
+    private final CopyOnWriteArrayList<Order> processedOrders = new CopyOnWriteArrayList<>();
 
     public void addProduct(Product product, int quantity) {
         stock.put(product, quantity);
@@ -24,18 +21,16 @@ public class Warehouse {
         int quantity = order.getQuantity();
 
         if (stock.get(product) >= quantity) {
-            Integer result = stock.computeIfPresent(product, (p, q) -> {
+            stock.computeIfPresent(product, (p, q) -> {
                 if (q >= quantity) {
                     return q - quantity;
                 }
                 return q;
             });
 
-            if(result != null && stock.get(product) + quantity >= quantity) {
-                processedOrders.add(order);
-//                System.out.println(processedOrders.stream().map(Order::getProduct).toList().stream().map(Product::getName).toList());
-                return true;
-            };
+            // let's not null-check for simplicity
+            processedOrders.add(order);
+            return true;
 
         }
         return false;

@@ -2,6 +2,7 @@ package com.example.warehouse.service;
 
 import com.example.warehouse.model.Order;
 import com.example.warehouse.model.Product;
+import com.example.warehouse.model.Reservation;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -18,7 +19,6 @@ public class Customer implements Runnable{
         try {
             System.out.println("products " + products);
             for (Product product : products) {
-                System.out.println("product " + product);
                 // randomly choose quantity
                 int quantity = 1 + (int)(Math.random() * 3);
                 Order order = new Order(name, product,quantity);

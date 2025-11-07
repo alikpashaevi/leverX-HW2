@@ -2,6 +2,7 @@ package com.example.warehouse;
 
 import com.example.warehouse.model.Order;
 import com.example.warehouse.model.Product;
+import com.example.warehouse.model.Reservation;
 import com.example.warehouse.service.Customer;
 import com.example.warehouse.service.Warehouse;
 import com.example.warehouse.service.WarehouseWorker;
@@ -28,6 +29,19 @@ public class Main {
         warehouse.addProduct(product2, 6);
         warehouse.addProduct(product3, 6);
         warehouse.addProduct(product4, 5);
+
+        // reservation
+        String res1 = warehouse.reserveProduct("Alice", product, 2);
+        String res2 = warehouse.reserveProduct("Bob", product2, 3);
+        String res3 = warehouse.reserveProduct("Charlie", product3, 12); // Should fail
+
+        warehouse.displayReservations();
+        warehouse.displayInventory();
+
+        // cancel reservation
+        if (res1 != null) {
+            warehouse.cancelReservation(res1);
+        }
 
         List<Product> products = Arrays.asList(product, product2, product3, product4);
 
